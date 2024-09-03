@@ -1,0 +1,41 @@
+/**
+ * @param {Array} arr1
+ * @param {Array} arr2
+ * @return {Array}
+ */
+var join = function(arr1, arr2) {
+    // create empty map to keep track if existing keys and their indexes
+    const map = {};
+
+    // create joinedArr
+    const joinedArr = [];
+
+    // loop through each element from arr1
+    arr1.forEach((el, i) => {
+        // add key to map and keep their index in arr1 as values
+        map[el.id] = i;
+
+        // add each element from arr1 to new joinedArr
+        joinedArr.push(el);
+    });
+
+    // loop through arr2
+    arr2.forEach((a2_el) => {
+        // if key tracking map already contains the key, update data at that index in joinedArr
+        if(map[a2_el.id] !== undefined) {
+            // get index of element in joinedArr by id
+            const existingIndex = map[a2_el.id];
+
+            // loop through each key of arr2 current element
+            for(let key in a2_el) {
+                // add/update key/value pair at joinedArr index by arr2 element
+                joinedArr[existingIndex][key] = a2_el[key];
+            }
+        } else {
+            // if key tracking map does not contain key, push new element to joinedArr
+            joinedArr.push(a2_el);
+        }
+    });
+    // sort joinedArr by id and return new joined arr
+    return joinedArr.toSorted((a, b) => a.id - b.id);
+};
